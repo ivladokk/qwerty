@@ -1,0 +1,52 @@
+﻿
+@{
+    ViewBag.Title = "Projects";
+}
+
+<h2>Projects</h2>
+
+@{
+    if (ViewBag.Alert != null)
+    {
+        <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <p>@ViewBag.Alert</p>
+        </div>
+    }
+}
+
+
+<br />
+
+
+<a href="/Projects/Create/" class="btn btn-primary btn-sm active" role="button">Create New</a>
+<br />
+
+<table class="table table-hover">
+    <tr>
+        <td>
+            <p>ProjectID</p>
+        </td>
+        <td>
+            <p>ProjectName</p>
+        </td>
+        <td>
+            <p>TeamID</p>
+        </td>
+        <td></td>
+        <td></td>
+    </tr>
+    @foreach (var pr in ViewBag.Proj)
+    {
+    <tr>
+        <td><p>@pr.ID</p></td>
+        <td><p>@pr.ProjectName</p></td>
+        <td><p>@pr.TeamID</p></td>
+        <td><p><a href="/Projects/Edit/@pr.ID">Edit</a></p></td>
+        <td><p><a href="/Projects/Delete/@pr.ID">Delete</a></p></td>
+    </tr>
+    }
+</table>
+

@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewBag.Title = "Bugs";
+}
+
+<h2>Bugs</h2>
+<br />
+<a href="/Bugs/Create/" class="btn btn-primary btn-lg active" role="button">Create New</a>
+<br />
+<table class="table table-hover">
+    <tr>
+        <td>
+            <p>ID</p>
+        </td>
+        <td>
+            <p>BugName</p>
+        </td>
+        <td>
+            <p>ProjectID</p>
+        </td>
+        <td>
+            <p>TaskID</p>
+        </td>
+        <td>
+            <p>UserID</p>
+        </td>
+        <td></td>
+    </tr>
+    @foreach (var t in ViewBag.Bugs)
+    {
+        <tr>
+            <td><p>@t.ID</p></td>
+            <td><p>@t.BugName</p></td>
+            <td><p>@t.ProjectID</p></td>
+            <td><p>@t.TaskID</p></td>
+            <td><p>@t.UserID</p></td>
+            <td><p><a href="/Bugs/Edit/@t.ID">Edit</a></p></td>
+        </tr>
+    }
+</table>
