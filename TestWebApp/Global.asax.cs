@@ -17,19 +17,13 @@ namespace TestWebApp
     public class MvcApplication : System.Web.HttpApplication
     {
         public static IKernel AppKernel;
-        public static DBManager dbmanager;
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-
-            
             AppKernel = new StandardKernel(new DBProviderNinjectModule());
-            dbmanager = AppKernel.Get<DBManager>();
-
-            
 
         }
     }

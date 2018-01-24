@@ -1,4 +1,6 @@
 ﻿using Models;
+using Ninject;
+using Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,27 +14,41 @@ namespace TestWebApp.Controllers
         // GET: Projects
         public ActionResult Index()
         {
-            var proj = MvcApplication.dbmanager.Select<Project>();
-            ViewBag.Proj = proj;
+            using (var manager = MvcApplication.AppKernel.Get<DBManager>())
+            {
+                var proj = manager.Select<Project>();
+                ViewBag.Proj = proj;
+            }
             return View();
         }
         public ActionResult ViewIndex(string alert)
         {
-            var proj = MvcApplication.dbmanager.Select<Project>();
-            ViewBag.Proj = proj;
+            using (var manager = MvcApplication.AppKernel.Get<DBManager>())
+            {
+                var proj = manager.Select<Project>();
+                ViewBag.Proj = proj;
+            }
             ViewBag.Alert = alert;
             return View("Index");
+
         }
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            var item = MvcApplication.dbmanager.Select<Project>().Where(x => x.ID == id).FirstOrDefault();
-            return View("EditView", item);
+            using (var manager = MvcApplication.AppKernel.Get<DBManager>())
+            {
+                var item = manager.Select<Project>().FirstOrDefault(x => x.ID == id);
+                return View("EditView", item);
+            }
+            
         }
         [HttpPost]
         public ActionResult Edit(Project proj)
         {
-            MvcApplication.dbmanager.Edit(proj);
+            using (var manager = MvcApplication.AppKernel.Get<DBManager>())
+            {
+                manager.Edit(proj);
+            }
             return ViewIndex("Saved!");
         }
 
@@ -43,15 +59,22 @@ namespace TestWebApp.Controllers
         }
         public ActionResult Create(Project proj)
         {
-            MvcApplication.dbmanager.Add(proj);
+            using (var manager = MvcApplication.AppKernel.Get<DBManager>())
+            {
+                manager.Add(proj);
+            }
             return ViewIndex("Created!");
         }
 
         [HttpGet]
         public ActionResult Delete(int id)
         {
-            var item = MvcApplication.dbmanager.Select<Project>().Where(x => x.ID == id).FirstOrDefault();
-            MvcApplication.dbmanager.Delete(item);
+            using (var manager = MvcApplication.AppKernel.Get<DBManager>())
+            {
+                var item = manager.Select<Project>().FirstOrDefault(x => x.ID == id);
+                manager.Delete(item);
+            }
+           
             return ViewIndex("Deleted!");
         }
 

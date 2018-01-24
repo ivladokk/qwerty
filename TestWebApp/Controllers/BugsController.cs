@@ -1,4 +1,6 @@
 ﻿using Models;
+using Ninject;
+using Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,27 +14,39 @@ namespace TestWebApp.Controllers
         // GET: Bugs
         public ActionResult Index()
         {
-            var bugs = MvcApplication.dbmanager.Select<Bug>();
-            ViewBag.Bugs = bugs;
+            using (var manager = MvcApplication.AppKernel.Get<DBManager>())
+            {
+                var bugs = manager.Select<Bug>();
+                ViewBag.Bugs = bugs;
+            }
             return View();
         }
         public ActionResult ViewIndex(string alert)
         {
-            var bugs = MvcApplication.dbmanager.Select<Bug>();
-            ViewBag.Bugs = bugs;
+            using (var manager = MvcApplication.AppKernel.Get<DBManager>())
+            {
+                var bugs = manager.Select<Bug>();
+                ViewBag.Bugs = bugs;
+            }
             ViewBag.Alert = alert;
             return View("Index");
         }
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            var item = MvcApplication.dbmanager.Select<Bug>().Where(x => x.ID == id).FirstOrDefault();
-            return View("EditView", item);
+            using (var manager = MvcApplication.AppKernel.Get<DBManager>())
+            {
+                var item = manager.Select<Bug>().Where(x => x.ID == id).FirstOrDefault();
+                return View("EditView", item);
+            }
         }
         [HttpPost]
         public ActionResult Edit(Bug bug)
         {
-            MvcApplication.dbmanager.Edit(bug);
+            using (var manager = MvcApplication.AppKernel.Get<DBManager>())
+            {
+                manager.Edit(bug);
+            }
             return ViewIndex("Saved!");
         }
 
@@ -43,14 +57,20 @@ namespace TestWebApp.Controllers
         }
         public ActionResult Create(Bug bug)
         {
-            MvcApplication.dbmanager.Add(bug);
+            using (var manager = MvcApplication.AppKernel.Get<DBManager>())
+            {
+                manager.Add(bug);
+            }
             return ViewIndex("Created!");
         }
         [HttpGet]
         public ActionResult Delete(int id)
         {
-            var item = MvcApplication.dbmanager.Select<Bug>().Where(x => x.ID == id).FirstOrDefault();
-            MvcApplication.dbmanager.Delete(item);
+            using (var manager = MvcApplication.AppKernel.Get<DBManager>())
+            {
+                var item = manager.Select<Bug>().FirstOrDefault(x => x.ID == id);
+                manager.Delete(item);
+            }
             return ViewIndex("Deleted!");
         }
 

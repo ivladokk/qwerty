@@ -1,4 +1,6 @@
 ﻿using Models;
+using Ninject;
+using Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,28 +14,40 @@ namespace TestWebApp.Controllers
         // GET: Users
         public ActionResult Index()
         {
-            var users = MvcApplication.dbmanager.Select<User>();
-            ViewBag.Users = users;
+            using (var manager = MvcApplication.AppKernel.Get<DBManager>())
+            {
+                var users = manager.Select<User>();
+                ViewBag.Users = users;
+            }
             return View();
         }
 
         public ActionResult ViewIndex(string alert)
         {
-            var Users = MvcApplication.dbmanager.Select<User>();
-            ViewBag.Users = Users;
+            using (var manager = MvcApplication.AppKernel.Get<DBManager>())
+            {
+                var Users = manager.Select<User>();
+                ViewBag.Users = Users;
+            }
             ViewBag.Alert = alert;
             return View("Index");
         }
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            var item = MvcApplication.dbmanager.Select<User>().Where(x => x.ID == id).FirstOrDefault();
-            return View("EditView", item);
+            using (var manager = MvcApplication.AppKernel.Get<DBManager>())
+            {
+                var item = manager.Select<User>().FirstOrDefault(x => x.ID == id);
+                return View("EditView", item);
+            }
         }
         [HttpPost]
         public ActionResult Edit(User user)
         {
-            MvcApplication.dbmanager.Edit(user);
+            using (var manager = MvcApplication.AppKernel.Get<DBManager>())
+            {
+                manager.Edit(user);
+            }
             return ViewIndex("Saved!");
         }
 
@@ -44,14 +58,20 @@ namespace TestWebApp.Controllers
         }
         public ActionResult Create(User user)
         {
-            MvcApplication.dbmanager.Add(user);
+            using (var manager = MvcApplication.AppKernel.Get<DBManager>())
+            {
+                manager.Add(user);
+            }
             return ViewIndex("Created!");
         }
         [HttpGet]
         public ActionResult Delete(int id)
         {
-            var item = MvcApplication.dbmanager.Select<User>().Where(x => x.ID == id).FirstOrDefault();
-            MvcApplication.dbmanager.Delete(item);
+            using (var manager = MvcApplication.AppKernel.Get<DBManager>())
+            {
+                var item = manager.Select<User>().FirstOrDefault(x => x.ID == id);
+                manager.Delete(item);
+            }
             return ViewIndex("Deleted!");
         }
     }
