@@ -46,6 +46,13 @@ namespace TestWebApp.Controllers
             MvcApplication.dbmanager.Add(bug);
             return ViewIndex("Created!");
         }
+        [HttpGet]
+        public ActionResult Delete(int id)
+        {
+            var item = MvcApplication.dbmanager.Select<Bug>().Where(x => x.ID == id).FirstOrDefault();
+            MvcApplication.dbmanager.Delete(item);
+            return ViewIndex("Deleted!");
+        }
 
     }
 }

@@ -5,7 +5,7 @@
 
 <h2>Tasks</h2>
 <br />
-<a href="/Teams/Create/" class="btn btn-primary btn-lg active" role="button">Create New</a>
+<a href="/Tasks/Create/" class="btn btn-primary btn-sm active" role="button">Create New</a>
 <br />
 <table class="table table-hover">
     <tr>
@@ -22,15 +22,17 @@
             <p>UserID</p>
         </td>
         <td></td>
+        <td></td>
     </tr>
     @foreach (var t in ViewBag.Tasks)
     {
-        <tr>
-            <td><p>@t.ID</p></td>
-            <td><p>@t.ProjectID</p></td>
-            <td><p>@t.TaskName</p></td>
-            <td><p>@t.UserID</p></td>
-            <td><p><a href="/Tasks/Edit/@t.ID">Edit</a></p></td>
-        </tr>
+    <tr>
+        <td><p>@t.ID</p></td>
+        <td><p>@t.ProjectID</p></td>
+        <td><p>@t.TaskName</p></td>
+        <td><p>@t.UserID</p></td>
+        <td><p><a href="/Tasks/Edit/@t.ID">Edit</a></p></td>
+        <td><p><a href="/Tasks/Delete/@t.ID">Delete</a></p></td>
+    </tr>
     }
 </table>

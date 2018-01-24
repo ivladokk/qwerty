@@ -25,16 +25,18 @@
             <p>UserID</p>
         </td>
         <td></td>
+        <td></td>
     </tr>
     @foreach (var t in ViewBag.Bugs)
     {
-        <tr>
-            <td><p>@t.ID</p></td>
-            <td><p>@t.BugName</p></td>
-            <td><p>@t.ProjectID</p></td>
-            <td><p>@t.TaskID</p></td>
-            <td><p>@t.UserID</p></td>
-            <td><p><a href="/Bugs/Edit/@t.ID">Edit</a></p></td>
-        </tr>
+    <tr>
+        <td><p>@t.ID</p></td>
+        <td><p>@t.BugName</p></td>
+        <td><p>@t.ProjectID</p></td>
+        <td><p>@t.TaskID</p></td>
+        <td><p>@t.UserID</p></td>
+        <td><p><a href="/Bugs/Edit/@t.ID">Edit</a></p></td>
+        <td><p><a href="/Bugs/Delete/@t.ID">Delete</a></p></td>
+    </tr>
     }
 </table>

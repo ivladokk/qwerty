@@ -202,8 +202,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Test\Index.cshtml" />
     <Content Include="Views\Projects\Index.cshtml" />
@@ -213,6 +211,9 @@
     <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\Projects\EditView.cshtml" />
     <Content Include="Views\Bugs\EditView.cshtml" />
+    <Content Include="Views\Tasks\EditView.cshtml" />
+    <Content Include="Views\Users\EditView.cshtml" />
+    <Content Include="Views\Teams\EditView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
