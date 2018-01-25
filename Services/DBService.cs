@@ -13,63 +13,107 @@ using System.Reflection;
 using MyAttributes;
 using System.Collections;
 using System.Data.Entity.Migrations;
+using System.Diagnostics;
 
 namespace Services
 {
     public class DBManager: IDisposable
     {
         private IDBRepository _repository;
+        public int retryCount = 3;
         public DBManager(IDBRepository repository)
         {
+
             _repository = repository;
         }
+
         public void Add<T>(T item) where T : class, new()
         {
-            try
+            int curRetry = 0;
+            do
             {
-                _repository.Add(item);
+                try
+                {
+                    curRetry++;
+                    _repository.Add(item);
+                    break;
+
+                }
+                catch (Exception ex)
+                {
+                    Trace.WriteLine(ex.Message);
+                    if (curRetry >= retryCount)
+                        throw new Exception(ex.Message);
+                }
             }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-            
+            while (true);
+
+
         }
         public void Edit<T>(T item) where T : DBEntity
         {
-            try
+            int curRetry = 0;
+            do
             {
-                _repository.Edit(item);
+                try
+                {
+                    curRetry++;
+                    _repository.Edit(item);
+                    break;
+
+                }
+                catch (Exception ex)
+                {
+                    Trace.WriteLine(ex.Message);
+                    if (curRetry >= retryCount)
+                        throw new Exception(ex.Message);
+                }
             }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-            
+            while (true);
+
         }
         public void Delete<T>(T item) where T : DBEntity
         {
-            try
+            int curRetry = 0;
+            do
             {
-                _repository.Delete(item);
+                try
+                {
+                    curRetry++;
+                    _repository.Delete(item);
+                    break;
+
+                }
+                catch (Exception ex)
+                {
+                    Trace.WriteLine(ex.Message);
+                    if (curRetry >= retryCount)
+                        throw new Exception(ex.Message);
+                }
             }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-            
+            while (true);
+
         }
         public IEnumerable<T> Select<T>() where T : class, new()
         {
-            try
+            int curRetry = 0;
+            do
             {
-                return _repository.Read<T>();
+                try
+                {
+                    curRetry++;
+                    return _repository.Read<T>();
+                }
+                catch (Exception ex)
+                {
+                    Trace.WriteLine(ex.Message);
+                    if (curRetry >= retryCount)
+                        throw new Exception(ex.Message);
+                }
             }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-            
+            while (true);
+
+
         }
         public void Dispose()
         {
@@ -143,8 +187,29 @@ namespace Services
         private SqlConnection connection;
         public ADORepository(string constr)
         {
-            connection = new SqlConnection(constr);
-            connection.Open();
+            int curRety = 0;
+            do
+            {
+                try
+                {
+                    curRety++;
+                    connection = new SqlConnection(constr);
+                    connection.Open();
+                    break;
+
+                }
+                catch (Exception ex)
+                {
+                    Trace.WriteLine(ex.Message);
+                    if (curRety > 3)
+                        throw new Exception(ex.Message);
+                }
+
+
+            }
+            while (true);
+
+            
         }
 
         struct ADOFieldInfo
