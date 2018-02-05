@@ -1,0 +1,85 @@
+﻿@model UIModels.ProjectDetailViewModel
+@{
+    ViewBag.Title = "DetailsView";
+}
+
+
+<div class="jumbotron mt-4 p-3">
+    <p>Project name:</p>
+    <h2>@Model.ProjectName</h2>
+    <p>Project description</p>
+    <h3>@Model.Description</h3>
+    <p>Customer:</p>
+    <h4>@Model.Customer</h4>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <nav>
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#users" role="tab" aria-controls="project-users" aria-selected="true">Users</a>
+                    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#tasks" role="tab" aria-controls="project-tasks" aria-selected="false">Tasks</a>
+                    <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#bugs" role="tab" aria-controls="project-bugs" aria-selected="false">Bugs</a>
+                </div>
+            </nav>
+            <div class="tab-content" id="nav-tabContent" style="border: 1px solid #dee2e6; border-top: none; border-radius: 0 0 5px 5px">
+                <div class="tab-pane fade show active" id="users" role="tabpanel" aria-labelledby="project-users-tab">
+                    @{
+                        Html.RenderPartial("ProjectUsersPartialView", Model.Users, new ViewDataDictionary { { "projectID", Model.ID } });
+                    }
+                </div>
+                <div class="tab-pane fade" id="tasks" role="tabpanel" aria-labelledby="project-tasks-tab">
+                    @{
+                        Html.RenderPartial("ProjectTasksPartialView", Model.Tasks, new ViewDataDictionary { { "projectID", Model.ID } });
+                    }
+                </div>
+                <div class="tab-pane fade" id="bugs" role="tabpanel" aria-labelledby="project-bugs-tab">
+                    @{
+                        Html.RenderPartial("ProjectBugsPartialView", Model.Bugs, new ViewDataDictionary { { "projectID", Model.ID } });
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modDialog" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div id="dialogContent" class="modal-dialog" role="document">
+    </div>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+
+        $(function () {
+            $.ajaxSetup({ cache: false });
+            $(".taskEdit").click(function (e) {
+
+                e.preventDefault();
+                $.get(this.href, function (data) {
+                    $('#dialogContent').html(data);
+                    $('#modDialog').modal('show');
+                });
+            });
+        })
+        $(function () {
+            $.ajaxSetup({ cache: false });
+            $(".newTask").click(function (e) {
+                e.preventDefault();
+                $.get(this.href, function (data) {
+                    $('#dialogContent').html(data);
+                    $('#modDialog').modal('show');
+                });
+            });
+        })
+    </script>
+}
+
+
+
+
+
+
+

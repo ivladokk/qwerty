@@ -1,0 +1,33 @@
+﻿@model IEnumerable<UIModels.ProjectBugViewModel>
+
+@Html.ActionLink("Create", "CreateBug", "Bugs", new { id = Convert.ToInt32(ViewData["projectID"]) }, new { @class = "newTask btn btn-primary btn-sm active", @id = "newTask" })
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Bug Name</th>
+            <th scope="col">Status</th>
+            <th scope="col">User</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var i in Model)
+        {
+            <tr>
+                <td>
+                    @i.Bug.BugName
+                </td>
+                <td>
+                    @i.Bug.Status
+                </td>
+                <td>
+                    @i.User.UserName
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "EditBug", "Bugs", new { id = i.Bug.ID }, new { @class = "taskEdit" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

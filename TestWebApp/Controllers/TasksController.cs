@@ -1,5 +1,6 @@
-﻿using Models;
+﻿using DBModels;
 using Ninject;
+using Repository;
 using Services;
 using System;
 using System.Collections.Generic;
@@ -11,43 +12,63 @@ namespace TestWebApp.Controllers
 {
     public class TasksController : Controller
     {
+        private TasksService tasksService;
+        public TasksController()
+        {
+            tasksService = new TasksService(MvcApplication.AppKernel.Get<DBManager>());
+        }
         // GET: Tasks
         public ActionResult Index()
         {
-            using (var manager = MvcApplication.AppKernel.Get<DBManager>())
-            {
-                var tasks = manager.Select<Task>();
-                ViewBag.Tasks = tasks;
-            }
-                
-            return View();
+            var tasks = tasksService.SelectTasks();
+            return View(tasks);
         }
         public ActionResult ViewIndex(string alert)
         {
-            using (var manager = MvcApplication.AppKernel.Get<DBManager>())
-            {
-                var tasks = manager.Select<Task>();
-                ViewBag.Tasks = tasks;
-            }
+            var tasks = tasksService.SelectTasks();
             ViewBag.Alert = alert;
-            return View("Index");
+            return View("Index", tasks);
         }
+
+        [HttpGet]
+        public ActionResult EditTask(int id)
+        {
+            return PartialView("ModalView", tasksService.GetTaskByID(id));
+        }
+
+        [HttpGet]
+        public ActionResult CreateTask(int id)
+        {
+            var newTask = new Task
+            {
+                ProjectID = id
+            };
+            return PartialView("ModalView", newTask);
+        }
+
+        [HttpPost]
+        public ActionResult CreateTask(Task task)
+        {
+            tasksService.AddTask(task);
+            return RedirectToAction("Details", "Projects", new { id = task.ProjectID });
+        }
+
+        [HttpPost]
+        public ActionResult EditTask(Task task)
+        {
+            tasksService.EditTask(task);
+            return RedirectToAction("Details", "Projects", new { id = task.ProjectID });
+        }
+
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            using (var manager = MvcApplication.AppKernel.Get<DBManager>())
-            {
-                var item = manager.Select<Task>().FirstOrDefault(x => x.ID == id);
-                return View("EditView", item);
-            }
+            return PartialView("EditView", tasksService.GetTaskByID(id));
         }
         [HttpPost]
-        public ActionResult Edit(Task Task)
+        public ActionResult Edit(Task task)
         {
-            using (var manager = MvcApplication.AppKernel.Get<DBManager>())
-            {
-                manager.Edit(Task);
-            }
+            tasksService.EditTask(task);
             return ViewIndex("Saved!");
         }
 
@@ -56,23 +77,16 @@ namespace TestWebApp.Controllers
         {
             return View("EditView", null);
         }
-        public ActionResult Create(Task Task)
+        public ActionResult Create(Task task)
         {
-            using (var manager = MvcApplication.AppKernel.Get<DBManager>())
-            {
-                manager.Add(Task);
-            }
+            tasksService.AddTask(task);
             return ViewIndex("Created!");
         }
 
         [HttpGet]
         public ActionResult Delete(int id)
         {
-            using (var manager = MvcApplication.AppKernel.Get<DBManager>())
-            {
-                var item = manager.Select<Task>().FirstOrDefault(x => x.ID == id);
-                manager.Delete(item);
-            }
+            tasksService.DeleteTask(tasksService.GetTaskByID(id));
             return ViewIndex("Deleted!");
         }
 

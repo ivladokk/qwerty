@@ -1,11 +1,13 @@
 ﻿using Ninject.Modules;
 using Repository;
-using Services;
+using Repository.ADORepository;
+using Repository.EFRepository;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Web;
+
 
 namespace TestWebApp
 {
@@ -24,7 +26,7 @@ namespace TestWebApp
                     }
                 case "EF":
                     {
-                        Bind<IDBRepository>().To<EFRepository>().WithConstructorArgument("constr", constr);
+                        Bind<IDBRepository>().To<EFRepository_old>().WithConstructorArgument("constr", constr);
                         break;
                     }
                 default:

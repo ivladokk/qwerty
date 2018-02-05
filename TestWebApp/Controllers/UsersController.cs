@@ -1,5 +1,6 @@
-﻿using Models;
+﻿using DBModels;
 using Ninject;
+using Repository;
 using Services;
 using System;
 using System.Collections.Generic;
@@ -11,43 +12,30 @@ namespace TestWebApp.Controllers
 {
     public class UsersController : Controller
     {
-        // GET: Users
+        private UsersService userService;
+        public UsersController()
+        {
+            userService = new UsersService(MvcApplication.AppKernel.Get<DBManager>());
+        }
         public ActionResult Index()
         {
-            using (var manager = MvcApplication.AppKernel.Get<DBManager>())
-            {
-                var users = manager.Select<User>();
-                ViewBag.Users = users;
-            }
-            return View();
+            return View(userService.SelectUsers());
         }
 
         public ActionResult ViewIndex(string alert)
         {
-            using (var manager = MvcApplication.AppKernel.Get<DBManager>())
-            {
-                var Users = manager.Select<User>();
-                ViewBag.Users = Users;
-            }
             ViewBag.Alert = alert;
-            return View("Index");
+            return View("Index", userService.SelectUsers());
         }
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            using (var manager = MvcApplication.AppKernel.Get<DBManager>())
-            {
-                var item = manager.Select<User>().FirstOrDefault(x => x.ID == id);
-                return View("EditView", item);
-            }
+            return View("EditView", userService.GetUserByID(id));
         }
         [HttpPost]
         public ActionResult Edit(User user)
         {
-            using (var manager = MvcApplication.AppKernel.Get<DBManager>())
-            {
-                manager.Edit(user);
-            }
+            userService.EditUser(user);
             return ViewIndex("Saved!");
         }
 
@@ -58,21 +46,29 @@ namespace TestWebApp.Controllers
         }
         public ActionResult Create(User user)
         {
-            using (var manager = MvcApplication.AppKernel.Get<DBManager>())
-            {
-                manager.Add(user);
-            }
+            userService.AddUser(user);
             return ViewIndex("Created!");
         }
         [HttpGet]
         public ActionResult Delete(int id)
         {
-            using (var manager = MvcApplication.AppKernel.Get<DBManager>())
-            {
-                var item = manager.Select<User>().FirstOrDefault(x => x.ID == id);
-                manager.Delete(item);
-            }
+            userService.DeleteUser(userService.GetUserByID(id));
             return ViewIndex("Deleted!");
         }
+        [HttpGet]
+        public ActionResult Assign(int id)
+        {
+            DBModels.ProjectEmployment item = new ProjectEmployment();
+            item.UserID = id;
+            return View("AssignView", item);
+        }
+        [HttpPost]
+        public ActionResult Assign(ProjectEmployment prEm)
+        {
+            userService.AssignUserOnProject(prEm);
+            return ViewIndex("Assigned!");
+        }
+
+
     }
 }

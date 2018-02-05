@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<DBModels.Task>
 @{
     ViewBag.Title = "Tasks";
 }
@@ -13,23 +13,27 @@
             <p>ID</p>
         </td>
         <td>
-            <p>ProjectID</p>
+            <p>Project</p>
         </td>
         <td>
             <p>TaskName</p>
         </td>
         <td>
-            <p>UserID</p>
+            <p>Status</p>
+        </td>
+        <td>
+            <p>Assigned To</p>
         </td>
         <td></td>
         <td></td>
     </tr>
-    @foreach (var t in ViewBag.Tasks)
+    @foreach (var t in Model)
     {
     <tr>
         <td><p>@t.ID</p></td>
         <td><p>@t.ProjectID</p></td>
         <td><p>@t.TaskName</p></td>
+        <td><p>@t.Status</p></td>
         <td><p>@t.UserID</p></td>
         <td><p><a href="/Tasks/Edit/@t.ID">Edit</a></p></td>
         <td><p><a href="/Tasks/Delete/@t.ID">Delete</a></p></td>

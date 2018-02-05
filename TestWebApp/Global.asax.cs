@@ -1,6 +1,4 @@
-﻿using Models;
-using Ninject;
-using Services;
+﻿using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Configuration;

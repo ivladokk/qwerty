@@ -1,0 +1,23 @@
+﻿@model IEnumerable<UIModels.ProjectUserViewModel>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">User Name</th>
+            <th scope="col">Role</th>
+        </tr>
+        </thead>
+    <tbody>
+        @foreach(var i in Model)
+        {
+        <tr>
+            <td>
+                @i.User.UserName
+            </td>
+            <td>
+                @i.Role
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

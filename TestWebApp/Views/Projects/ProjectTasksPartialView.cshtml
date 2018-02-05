@@ -1,0 +1,39 @@
+﻿@model IEnumerable<UIModels.ProjectTaskViewModel>
+
+<br />
+
+@Html.ActionLink("Create", "CreateTask", "Tasks", new { id = Convert.ToInt32(ViewData["projectID"]) }, new { @class = "newTask btn btn-primary btn-sm active", @id = "newTask" })
+
+
+
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Task Name</th>
+            <th scope="col">Status</th>
+            <th scope="col">User</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var i in Model)
+        {
+            <tr>
+                <td>
+                    @i.Task.TaskName
+                </td>
+                <td>
+                    @i.Task.Status
+                </td>
+                <td>
+                    @i.User.UserName
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "EditTask", "Tasks", new { id = i.Task.ID }, new { @class = "taskEdit" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

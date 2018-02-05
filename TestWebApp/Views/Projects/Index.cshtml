@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<UIModels.ProjectViewModel>
 @{
     ViewBag.Title = "Projects";
 }
@@ -26,27 +26,24 @@
 
 <table class="table table-hover">
     <tr>
-        <td>
-            <p>ProjectID</p>
-        </td>
-        <td>
-            <p>ProjectName</p>
-        </td>
-        <td>
-            <p>TeamID</p>
-        </td>
-        <td></td>
-        <td></td>
+        <th scope="col">ProjectID</th>
+        <th scope="col">ProjectName</th>
+        <th scope="col">Count of users</th>
+        <th scope="col">Count of new tasks</th>
     </tr>
-    @foreach (var pr in ViewBag.Proj)
+    @foreach (var i in Model)
     {
     <tr>
-        <td><p>@pr.ID</p></td>
-        <td><p>@pr.ProjectName</p></td>
-        <td><p>@pr.TeamID</p></td>
-        <td><p><a href="/Projects/Edit/@pr.ID">Edit</a></p></td>
-        <td><p><a href="/Projects/Delete/@pr.ID">Delete</a></p></td>
+        <td><p>@i.ID</p></td>
+        <td><p>@i.ProjectName</p></td>
+        <td><p>@i.UsersCount</p></td>
+        <td><p>@i.NewTasksCount</p></td>
+        <td><p><a href="/Projects/Edit/@i.ID">Edit</a></p></td>
+        <td><p><a href="/Projects/Delete/@i.ID">Delete</a></p></td>
+        <td><p><a href="/Projects/Details/@i.ID">Details</a></p></td>
     </tr>
     }
 </table>
+
+
 

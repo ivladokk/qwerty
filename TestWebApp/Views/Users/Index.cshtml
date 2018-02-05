@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<DBModels.User>
 @{
     ViewBag.Title = "Users";
 }
@@ -15,20 +15,17 @@
         <td>
             <p>UserName</p>
         </td>
-        <td>
-            <p>TeamID</p>
-        </td>
         <td></td>
         <td></td>
     </tr>
-    @foreach (var user in ViewBag.Users)
+    @foreach (var user in Model)
     {
     <tr>
         <td><p>@user.ID</p></td>
         <td><p>@user.UserName</p></td>
-        <td><p>@user.TeamID</p></td>
         <td><p><a href="/Users/Edit/@user.ID">Edit</a></p></td>
         <td><p><a href="/Users/Delete/@user.ID">Delete</a></p></td>
+        <td><p><a href="/Users/Assign/@user.ID">Assign on project</a></p></td>
     </tr>
     }
 </table>

@@ -1,5 +1,6 @@
-﻿using Models;
+﻿using DBModels;
 using Ninject;
+using Repository;
 using Services;
 using System;
 using System.Collections.Generic;
@@ -9,44 +10,65 @@ using System.Web.Mvc;
 
 namespace TestWebApp.Controllers
 {
+    
     public class BugsController : Controller
     {
-        // GET: Bugs
+        private BugsService bugsService;
+        public BugsController()
+        {
+            bugsService = new BugsService(MvcApplication.AppKernel.Get<DBManager>());
+        }
         public ActionResult Index()
         {
-            using (var manager = MvcApplication.AppKernel.Get<DBManager>())
-            {
-                var bugs = manager.Select<Bug>();
-                ViewBag.Bugs = bugs;
-            }
-            return View();
+            var bugs = bugsService.SelectBugs();
+            return View(bugs);
         }
         public ActionResult ViewIndex(string alert)
         {
-            using (var manager = MvcApplication.AppKernel.Get<DBManager>())
-            {
-                var bugs = manager.Select<Bug>();
-                ViewBag.Bugs = bugs;
-            }
+            var bugs = bugsService.SelectBugs();
             ViewBag.Alert = alert;
-            return View("Index");
+            return View("Index", bugs);
         }
+        [HttpGet]
+        public ActionResult EditBug(int id)
+        {
+            return PartialView("ModalView", bugsService.GetBugByID(id));
+        }
+
+        [HttpGet]
+        public ActionResult CreateBug(int id)
+        {
+            var newBug = new Bug
+            {
+                ProjectID = id
+            };
+            return PartialView("ModalView", newBug);
+        }
+
+        [HttpPost]
+        public ActionResult CreateBug(Bug bug)
+        {
+            bugsService.AddBug(bug);
+            return RedirectToAction("Details", "Projects", new { id = bug.ProjectID });
+        }
+
+        [HttpPost]
+        public ActionResult EditBug(Bug bug)
+        {
+            bugsService.EditBug(bug);
+            return RedirectToAction("Details", "Projects", new { id = bug.ProjectID });
+        }
+
+
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            using (var manager = MvcApplication.AppKernel.Get<DBManager>())
-            {
-                var item = manager.Select<Bug>().Where(x => x.ID == id).FirstOrDefault();
-                return View("EditView", item);
-            }
+            return View("EditView", bugsService.GetBugByID(id));
         }
         [HttpPost]
         public ActionResult Edit(Bug bug)
         {
-            using (var manager = MvcApplication.AppKernel.Get<DBManager>())
-            {
-                manager.Edit(bug);
-            }
+            bugsService.EditBug(bug);
             return ViewIndex("Saved!");
         }
 
@@ -57,20 +79,13 @@ namespace TestWebApp.Controllers
         }
         public ActionResult Create(Bug bug)
         {
-            using (var manager = MvcApplication.AppKernel.Get<DBManager>())
-            {
-                manager.Add(bug);
-            }
+            bugsService.AddBug(bug);
             return ViewIndex("Created!");
         }
         [HttpGet]
         public ActionResult Delete(int id)
         {
-            using (var manager = MvcApplication.AppKernel.Get<DBManager>())
-            {
-                var item = manager.Select<Bug>().FirstOrDefault(x => x.ID == id);
-                manager.Delete(item);
-            }
+            bugsService.DeleteBug(bugsService.GetBugByID(id));
             return ViewIndex("Deleted!");
         }
 
