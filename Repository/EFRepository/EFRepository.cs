@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Repository.EFRepository
 {
-    public class EFRepository
+    public class EFRepository:IDBRepository
     {
         private readonly string _constr;
         public EFRepository(string constr)
@@ -66,7 +66,7 @@ namespace Repository.EFRepository
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            Database.SetInitializer<EFContext_old>(null);
+            Database.SetInitializer<EFContext>(null);
 
             base.OnModelCreating(modelBuilder);
         }

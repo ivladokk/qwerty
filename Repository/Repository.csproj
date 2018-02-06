@@ -48,10 +48,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ADORepository\ADORepository.cs" />
-    <Compile Include="ADORepository\ADORepository_old.cs" />
     <Compile Include="DBManager.cs" />
     <Compile Include="EFRepository\EFRepository.cs" />
-    <Compile Include="EFRepository\EFRepository_old.cs" />
     <Compile Include="IDBRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -26,7 +26,7 @@ namespace TestWebApp
                     }
                 case "EF":
                     {
-                        Bind<IDBRepository>().To<EFRepository_old>().WithConstructorArgument("constr", constr);
+                        Bind<IDBRepository>().To<EFRepository>().WithConstructorArgument("constr", constr);
                         break;
                     }
                 default:
