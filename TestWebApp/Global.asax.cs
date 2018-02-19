@@ -21,7 +21,10 @@ namespace TestWebApp
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            AppKernel = new StandardKernel(new DBProviderNinjectModule());
+            
+            AppKernel = new StandardKernel(new DBProviderNinjectModule(), new AuthNinjectModule());
+            
+            
         }
     }
    

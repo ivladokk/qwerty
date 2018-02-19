@@ -1,0 +1,21 @@
+﻿@model UIModels.ProjectViewModel[]
+
+<table class="table table-hover">
+    <tr>
+        <th scope="col">ProjectID</th>
+        <th scope="col">ProjectName</th>
+        <th scope="col">Count of users</th>
+        <th scope="col">Count of new tasks</th>
+    </tr>
+    @foreach (var i in Model)
+    {
+        <tr>
+            <td><p>@i.ID</p></td>
+            <td><p>@i.ProjectName</p></td>
+            <td><p>@i.UsersCount</p></td>
+            <td><p>@i.NewTasksCount</p></td>
+        </tr>
+    }
+</table>
+
+

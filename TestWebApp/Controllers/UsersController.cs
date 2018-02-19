@@ -7,15 +7,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TestWebApp.Filters;
 
 namespace TestWebApp.Controllers
 {
+    [MyAuth]
+    [Authorize(Roles ="Admin")]
     public class UsersController : Controller
     {
         private UsersService userService;
         public UsersController()
         {
-            userService = new UsersService(MvcApplication.AppKernel.Get<DBManager>());
+            userService = new UsersService(
+                new DBManager(
+                    DependencyResolver.Current.GetService<IDBRepository>()));
         }
         public ActionResult Index()
         {

@@ -7,16 +7,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TestWebApp.Filters;
 
 namespace TestWebApp.Controllers
 {
-    
+    [MyAuth]
+    [Authorize(Roles = "User")]
     public class BugsController : Controller
     {
         private BugsService bugsService;
         public BugsController()
         {
-            bugsService = new BugsService(MvcApplication.AppKernel.Get<DBManager>());
+            bugsService = new BugsService(
+                new DBManager(
+                    DependencyResolver.Current.GetService<IDBRepository>()));
         }
         public ActionResult Index()
         {

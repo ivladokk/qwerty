@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.Title = "Reporting";
+}
+
+@{
+    if (ViewBag.Message != null)
+    {
+        <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <p>@ViewBag.Message</p>
+        </div>
+    }
+
+}
+
+
+<h2>Welcome to Reporting Page!</h2>
+
+<p>Please, select report</p>
+
+<div class="list-group">
+    @Html.ActionLink("Projects Report", "ProjectsReport", "Reporting", new { area = "" }, new { @class = "list-group-item" })
+    @Html.ActionLink("Send report to my Email", "SendProjectsReportToEmail", "Reporting", new { area = "" }, new { @class = "list-group-item" })
+    <a href="#" class="list-group-item list-group-item-action">Super Report</a>
+</div>

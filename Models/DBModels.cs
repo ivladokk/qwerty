@@ -64,6 +64,10 @@ namespace DBModels
     {
         [SqlField("UserName", SqlDbType.NVarChar)]
         public string UserName { get; set; }
+        [SqlField("Password", SqlDbType.NVarChar)]
+        public string Password { get; set; }
+        [SqlField("Email",SqlDbType.NVarChar)]
+        public string Email { get; set; }
 
     }
 
@@ -78,6 +82,16 @@ namespace DBModels
 
         [SqlField("Role", SqlDbType.Int)]
         public UserRole Role { get; set; }
+
+    }
+
+    [TableName("Roles")]
+    public class Role :DBEntity
+    {
+        [SqlField("UserID", SqlDbType.Int)]
+        public int UserID { get; set; }
+        [SqlField("Role",SqlDbType.NVarChar)]
+        public string RoleName { get; set; }
 
     }
     public enum UserRole

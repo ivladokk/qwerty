@@ -7,17 +7,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TestWebApp.Filters;
 
 namespace TestWebApp.Controllers
 {
+    [MyAuth]
+    [Authorize(Roles = "User")]
     public class TasksController : Controller
     {
         private TasksService tasksService;
         public TasksController()
         {
-            tasksService = new TasksService(MvcApplication.AppKernel.Get<DBManager>());
+            tasksService = new TasksService(
+                new DBManager(
+                    DependencyResolver.Current.GetService<IDBRepository>()));
         }
-        // GET: Tasks
         public ActionResult Index()
         {
             var tasks = tasksService.SelectTasks();

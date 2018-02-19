@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.27130.2020
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestWebApp", "TestWebApp\TestWebApp.csproj", "{90680B17-4C3E-4AA0-8505-C34DBC6BE6EE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7ED2BE1F-5977-43BE-8EF7-15E968027C39} = {7ED2BE1F-5977-43BE-8EF7-15E968027C39}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "Repository\Repository.csproj", "{9C87C69A-23D5-4C76-8F07-58CD1B6A7139}"
 EndProject
@@ -11,7 +14,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Servic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{2474F872-914D-424F-826E-AAE5561BE8F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.Tests", "Services.Tests\Services.Tests.csproj", "{B210B52A-1BEB-44A6-9FA0-6B91F1526C67}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyWCFService", "MyWCFService\MyWCFService.csproj", "{7ED2BE1F-5977-43BE-8EF7-15E968027C39}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +38,10 @@ Global
 		{2474F872-914D-424F-826E-AAE5561BE8F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2474F872-914D-424F-826E-AAE5561BE8F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2474F872-914D-424F-826E-AAE5561BE8F4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B210B52A-1BEB-44A6-9FA0-6B91F1526C67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B210B52A-1BEB-44A6-9FA0-6B91F1526C67}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B210B52A-1BEB-44A6-9FA0-6B91F1526C67}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B210B52A-1BEB-44A6-9FA0-6B91F1526C67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7ED2BE1F-5977-43BE-8EF7-15E968027C39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7ED2BE1F-5977-43BE-8EF7-15E968027C39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7ED2BE1F-5977-43BE-8EF7-15E968027C39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7ED2BE1F-5977-43BE-8EF7-15E968027C39}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

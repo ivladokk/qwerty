@@ -55,6 +55,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Repository\Repository.csproj">
+      <Project>{9C87C69A-23D5-4C76-8F07-58CD1B6A7139}</Project>
+      <Name>Repository</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Services\Services.csproj">
       <Project>{3EF8C4AD-A2B4-4DBB-BDB0-9DBF1F9DE2C5}</Project>
       <Name>Services</Name>

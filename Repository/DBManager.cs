@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Repository
 {
-    public class DBManager : IDisposable
+    public class DBManager:IDisposable
     {
         private IDBRepository _repository;
         public int retryCount = 3;
@@ -106,10 +106,10 @@ namespace Repository
 
 
         }
+
         public void Dispose()
         {
-            //_repository.Dispose();
+            
         }
-
     }
 }

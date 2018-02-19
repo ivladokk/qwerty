@@ -75,5 +75,6 @@ namespace Repository.EFRepository
         public DbSet<DBModels.Bug> Bugs { get; set; }
         public DbSet<DBModels.User> Users { get; set; }
         public DbSet<DBModels.ProjectEmployment> ProjectEmployments { get; set; }
+        public DbSet<Role> Roles { get; set; }
     }
 }

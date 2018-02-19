@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light ">
             @Html.ActionLink("TestApp", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -28,10 +28,20 @@
                     <li class="nav-item">
                         @Html.ActionLink("Users", "Index", "Users", new { area = "" }, new { @class = "nav-link" })
                     </li>
+                    <li class="nav-item">
+                        @Html.ActionLink("Reports", "Index", "Reporting", new { area = "" }, new { @class = "nav-link" })
+                    </li>
                 </ul>
+
             </div>
+            @Html.Action("UserLogin", "Login")
+            
+
+
+
         </nav>
     </div>
+    
     <div class="container body-content mt-5">
         @RenderBody()
         <hr />

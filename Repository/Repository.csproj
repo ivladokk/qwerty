@@ -50,6 +50,7 @@
     <Compile Include="ADORepository\ADORepository.cs" />
     <Compile Include="DBManager.cs" />
     <Compile Include="EFRepository\EFRepository.cs" />
+    <Compile Include="IDBManager.cs" />
     <Compile Include="IDBRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

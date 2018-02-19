@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Web;
+using TestWebApp.Auth;
 
 
 namespace TestWebApp
@@ -35,8 +36,17 @@ namespace TestWebApp
                     }
             }
 
+            
+
             //Bind<IDBRepository>().To<ADORepository>().WithConstructorArgument("constr", constr);
             //Bind<IDBRepository>().To<EFRepository>().WithConstructorArgument("constr", constr);
+        }
+    }
+    public class AuthNinjectModule : NinjectModule
+    {
+        public override void Load()
+        {
+            Bind<IAuthentication>().To<MyAuthentication>();
         }
     }
 }
