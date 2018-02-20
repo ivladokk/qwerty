@@ -14,7 +14,9 @@ namespace TestWebApp.Helpers
     {
         public static IEnumerable<SelectListItem> GetProjectUsers(int projectId)
         {
-            var service = new ProjectsService(MvcApplication.AppKernel.Get<DBManager>());
+            var service = new ProjectsService(
+                new DBManager(
+                    DependencyResolver.Current.GetService<IDBRepository>()));
             return service.GetProjectUsers(projectId).Select(x => new SelectListItem
             {
                 Text = x.User.UserName,
@@ -23,7 +25,9 @@ namespace TestWebApp.Helpers
         }
         public static IEnumerable<SelectListItem> GetProjects()
         {
-            var service = new ProjectsService(MvcApplication.AppKernel.Get<DBManager>());
+            var service = new ProjectsService(
+                new DBManager(
+                    DependencyResolver.Current.GetService<IDBRepository>()));
             return service.SelectProjects().Select(x => new SelectListItem
             {
                 Text = x.ProjectName,

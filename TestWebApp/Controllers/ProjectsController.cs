@@ -43,7 +43,7 @@ namespace TestWebApp.Controllers
         [HttpGet]
         public PartialViewResult EditPartial(int id)
         {
-            using (var manager = MvcApplication.AppKernel.Get<DBManager>())
+            using (var manager = new DBManager(DependencyResolver.Current.GetService<IDBRepository>()))
             {
                 var item = manager.Select<Project>().FirstOrDefault(x => x.ID == id);
                 return PartialView("EditPartialView", item);
@@ -54,7 +54,7 @@ namespace TestWebApp.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            using (var manager = MvcApplication.AppKernel.Get<DBManager>())
+            using (var manager = new DBManager(DependencyResolver.Current.GetService<IDBRepository>()))
             {
                 var item = manager.Select<Project>().FirstOrDefault(x => x.ID == id);
                 return View("EditView", item);
@@ -63,7 +63,7 @@ namespace TestWebApp.Controllers
         [HttpPost]
         public ActionResult Edit(Project proj)
         {
-            using (var manager = MvcApplication.AppKernel.Get<DBManager>())
+            using (var manager = new DBManager(DependencyResolver.Current.GetService<IDBRepository>()))
             {
                 manager.Edit(proj);
             }
@@ -72,7 +72,7 @@ namespace TestWebApp.Controllers
         [HttpGet]
         public ActionResult EditDetails(int id)
         { 
-            using (var manager = MvcApplication.AppKernel.Get<DBManager>())
+            using (var manager = new DBManager(DependencyResolver.Current.GetService<IDBRepository>()))
             {
                 var task = manager.Select<DBModels.Task>().FirstOrDefault(x => x.ID == id);
                 return PartialView("ModalView", task);
@@ -95,7 +95,7 @@ namespace TestWebApp.Controllers
         [HttpGet]
         public ActionResult Delete(int id)
         {
-            using (var manager = MvcApplication.AppKernel.Get<DBManager>())
+            using (var manager = new DBManager(DependencyResolver.Current.GetService<IDBRepository>()))
             {
                 var item = manager.Select<Project>().FirstOrDefault(x => x.ID == id);
                 manager.Delete(item);

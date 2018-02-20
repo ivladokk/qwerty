@@ -22,7 +22,6 @@ namespace TestWebApp
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             
-            AppKernel = new StandardKernel(new DBProviderNinjectModule(), new AuthNinjectModule());
             
             
         }
